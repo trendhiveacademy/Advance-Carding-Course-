@@ -13,10 +13,10 @@ document.addEventListener("keydown", function (e) {
     }
 });
 
-// Load Video Securely (Prevents Direct Download)
+// Load "hand.mp4" Securely (Prevents Direct Download)
 document.addEventListener("DOMContentLoaded", function () {
     let videoElement = document.getElementById("secure-video");
-    let videoUrl = "your-video-url.mp4"; // Change this to your actual video link
+    let videoUrl = "hand.mp4"; // Your actual video file
 
     let source = document.createElement("source");
     source.src = videoUrl;
