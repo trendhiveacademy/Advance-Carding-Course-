@@ -23,9 +23,11 @@ function onYouTubeIframeAPIReady() {
         width: "640",
         videoId: "i9fRQ7Nj5ZQ", // Your YouTube Video ID
         playerVars: {
-            "modestbranding": 1, 
-            "rel": 0, 
-            "controls": 0
+            "modestbranding": 1,  // Removes YouTube logo
+            "rel": 0,             // Disables recommended videos at the end
+            "showinfo": 0,        // Hides video info (deprecated, but still useful)
+            "controls": 1,        // Allows minimal controls
+            "disablekb": 1        // Disables keyboard shortcuts
         }
     });
 }
