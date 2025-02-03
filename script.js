@@ -1,42 +1,38 @@
-// Prevent Right Click
+// Prevent Right Click & Inspect Element
 document.addEventListener("contextmenu", function (e) {
     e.preventDefault();
 });
 
-// Prevent Keyboard Shortcuts (Ctrl+S, Ctrl+U, F12, Print Screen)
 document.addEventListener("keydown", function (e) {
-    if (e.ctrlKey && (e.key === "s" || e.key === "u" || e.key === "p")) {
-        e.preventDefault();
-    }
-    if (e.key === "F12") {
+    if (e.ctrlKey && (e.key === "s" || e.key === "u" || e.key === "p" || e.key === "F12")) {
         e.preventDefault();
     }
 });
 
-// Load "hand.mp4" Securely (Prevents Direct Download)
-document.addEventListener("DOMContentLoaded", function () {
-    let videoElement = document.getElementById("secure-video");
-    let videoUrl = "hand.mp4"; // Your actual video file
+// Get the current website domain dynamically
+const allowedDomain = window.location.hostname;
 
-    let source = document.createElement("source");
-    source.src = videoUrl;
-    source.type = "video/mp4";
-    
-    videoElement.appendChild(source);
-});
-
-// Black Screen on Screen Recording
-function detectRecording() {
-    let dummyCanvas = document.createElement("canvas");
-    let ctx = dummyCanvas.getContext("2d");
-    
-    ctx.fillRect(0, 0, dummyCanvas.width, dummyCanvas.height);
-    let pixels = ctx.getImageData(0, 0, 1, 1).data;
-    
-    if (pixels[0] === 0 && pixels[1] === 0 && pixels[2] === 0) {
-        alert("Screen recording detected! Video playback stopped.");
-        document.getElementById("secure-video").pause();
+// Restrict Video Playback to Only This Website
+function onYouTubeIframeAPIReady() {
+    if (window.location.hostname !== allowedDomain) {
+        alert("This video can only be watched on the official website.");
+        return;
     }
+
+    new YT.Player("player", {
+        height: "360",
+        width: "640",
+        videoId: "i9fRQ7Nj5ZQ", // Your YouTube Video ID
+        playerVars: {
+            "modestbranding": 1, 
+            "rel": 0, 
+            "controls": 0
+        }
+    });
 }
 
-setInterval(detectRecording, 3000); // Check for screen recording every 3 seconds
+// Load YouTube IFrame API
+let tag = document.createElement("script");
+tag.src = "https://www.youtube.com/iframe_api";
+let firstScriptTag = document.getElementsByTagName("script")[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
