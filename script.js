@@ -9,11 +9,10 @@ document.addEventListener("keydown", function (e) {
     }
 });
 
-// Get the current website domain dynamically
-const allowedDomain = window.location.hostname;
-
-// Restrict Video Playback to Only This Website
+// Function to Restrict Video Playback to Your Website
 function onYouTubeIframeAPIReady() {
+    let allowedDomain = window.location.hostname; // Auto-detects your GitHub Pages domain
+
     if (window.location.hostname !== allowedDomain) {
         alert("This video can only be watched on the official website.");
         return;
@@ -30,9 +29,3 @@ function onYouTubeIframeAPIReady() {
         }
     });
 }
-
-// Load YouTube IFrame API
-let tag = document.createElement("script");
-tag.src = "https://www.youtube.com/iframe_api";
-let firstScriptTag = document.getElementsByTagName("script")[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
