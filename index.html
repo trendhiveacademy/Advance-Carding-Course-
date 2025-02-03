@@ -4,19 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Video Streaming</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <script>
+        // Prevent Right Click & Inspect Element
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener("keydown", function (e) {
+            if (e.ctrlKey && (e.key === "s" || e.key === "u" || e.key === "p")) {
+                e.preventDefault();
+            }
+            if (e.key === "F12") {
+                e.preventDefault();
+            }
+        });
+    </script>
 </head>
 <body>
+    <h1>Protected Video</h1>
+    <div id="player"></div>
 
-    <h1>Protected Video Streaming</h1>
-    
-    <div class="video-container">
-        <video id="secure-video" controls oncontextmenu="return false;">
-            <!-- Video is added via JavaScript -->
-        </video>
-        <div id="watermark">TREND HIVE ACADEMY</div>
-    </div>
+    <script>
+        function onYouTubeIframeAPIReady() {
+            let allowedDomain = "yourwebsite.com";  // Change to your actual website domain
 
+            if (window.location.hostname !== allowedDomain) {
+                alert("This video can only be watched on the official website.");
+                return;
+            }
+
+            new YT.Player("player", {
+                height: "360",
+                width: "640",
+                videoId: "i9fRQ7Nj5ZQ", // Your YouTube Video ID
+                playerVars: {
+                    "modestbranding": 1, 
+                    "rel": 0, 
+                    "controls": 0
+                }
+            });
+        }
+    </script>
+    <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
